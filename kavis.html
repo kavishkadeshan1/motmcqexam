@@ -1,0 +1,1127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>MoT 200 MCQ Quiz - Master Your Exams</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%236366f1'/%3E%3Cstop offset='100%25' stop-color='%23ec4899'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='20' fill='url(%23g)'/%3E%3Ctext x='50' y='68' font-family='Arial,sans-serif' font-size='45' font-weight='bold' fill='white' text-anchor='middle'%3Ekd%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  :root{
+    --bg:#0a0a1a; --card:rgba(255,255,255,.06); --text:#ffffff;
+    --muted:rgba(255,255,255,.65); --border:rgba(255,255,255,.12);
+    --good:#10b981; --bad:#ef4444; 
+    --accent1:#6366f1; --accent2:#ec4899; --accent3:#8b5cf6;
+    --glass:rgba(255,255,255,.03);
+  }
+  body{
+    margin:0; font-family:'Inter',system-ui,-apple-system,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+    overflow-x:hidden;
+  }
+  
+  /* Animated Background */
+  .bg-animation{
+    position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;overflow:hidden;
+  }
+  .bg-animation::before{
+    content:'';position:absolute;width:800px;height:800px;
+    background:radial-gradient(circle,rgba(99,102,241,.3) 0%,transparent 70%);
+    top:-200px;left:-200px;animation:float 20s ease-in-out infinite;
+  }
+  .bg-animation::after{
+    content:'';position:absolute;width:600px;height:600px;
+    background:radial-gradient(circle,rgba(236,72,153,.25) 0%,transparent 70%);
+    bottom:-100px;right:-100px;animation:float 15s ease-in-out infinite reverse;
+  }
+  @keyframes float{
+    0%,100%{transform:translate(0,0) scale(1);}
+    33%{transform:translate(100px,50px) scale(1.1);}
+    66%{transform:translate(-50px,100px) scale(0.9);}
+  }
+  
+  /* Hero Section */
+  .hero{
+    text-align:center;padding:60px 20px 40px;position:relative;
+  }
+  .hero-badge{
+    display:inline-flex;align-items:center;gap:8px;
+    background:linear-gradient(135deg,rgba(99,102,241,.2),rgba(236,72,153,.2));
+    border:1px solid rgba(255,255,255,.1);
+    padding:8px 16px;border-radius:50px;font-size:13px;color:var(--muted);
+    margin-bottom:20px;backdrop-filter:blur(10px);
+  }
+  .hero-badge span{
+    background:linear-gradient(90deg,var(--accent1),var(--accent2));
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+    font-weight:600;
+  }
+  .hero h1{
+    font-size:clamp(32px,6vw,56px);font-weight:800;margin:0 0 16px;
+    background:linear-gradient(135deg,#fff 0%,rgba(255,255,255,.7) 100%);
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+    line-height:1.1;
+  }
+  .hero-subtitle{
+    font-size:clamp(16px,2.5vw,20px);color:var(--muted);max-width:600px;
+    margin:0 auto 30px;line-height:1.6;
+  }
+  .hero-stats{
+    display:flex;justify-content:center;gap:40px;flex-wrap:wrap;margin-bottom:30px;
+  }
+  .stat{text-align:center;}
+  .stat-value{
+    font-size:32px;font-weight:700;
+    background:linear-gradient(90deg,var(--accent1),var(--accent2));
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  }
+  .stat-label{font-size:13px;color:var(--muted);margin-top:4px;}
+  
+  .start-btn{
+    display:inline-flex;align-items:center;gap:10px;
+    background:linear-gradient(135deg,var(--accent1),var(--accent2));
+    color:#fff;border:none;padding:16px 32px;border-radius:16px;
+    font-size:16px;font-weight:600;cursor:pointer;
+    box-shadow:0 20px 40px rgba(99,102,241,.3);
+    transition:all .3s ease;
+  }
+  .start-btn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 25px 50px rgba(99,102,241,.4);
+  }
+  .start-btn svg{width:20px;height:20px;}
+  
+  /* Main App Container */
+  .app-container{
+    max-width:900px;margin:0 auto;padding:0 20px 40px;
+    display:none;
+  }
+  .app-container.active{display:block;}
+  
+  /* Control Bar */
+  .control-bar{
+    background:var(--glass);backdrop-filter:blur(20px);
+    border:1px solid var(--border);border-radius:20px;
+    padding:20px;margin-bottom:24px;
+  }
+  .control-row{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:12px;margin-bottom:16px;
+  }
+  .control-row:last-child{margin-bottom:0;}
+  
+  .select-wrapper{position:relative;}
+  .select-wrapper select{
+    width:100%;appearance:none;
+    background:rgba(20,20,40,.95);color:var(--text);
+    border:1px solid var(--border);padding:14px 40px 14px 16px;
+    border-radius:12px;font-size:14px;font-family:inherit;
+    cursor:pointer;transition:all .2s;
+  }
+  .select-wrapper select:hover{background:rgba(30,30,50,.95);}
+  .select-wrapper select:focus{outline:none;border-color:var(--accent1);}
+  .select-wrapper select option{
+    background:#1a1a2e;color:#fff;padding:12px;
+  }
+  .select-wrapper select option:hover{
+    background:var(--accent1);
+  }
+  .select-wrapper::after{
+    content:'▼';position:absolute;right:16px;top:50%;
+    transform:translateY(-50%);font-size:10px;color:var(--muted);
+    pointer-events:none;
+  }
+  
+  .btn-group{display:flex;gap:10px;flex-wrap:wrap;}
+  .btn{
+    flex:1;min-width:120px;
+    background:rgba(255,255,255,.06);color:var(--text);
+    border:1px solid var(--border);padding:14px 20px;
+    border-radius:12px;font-size:14px;font-weight:500;
+    font-family:inherit;cursor:pointer;transition:all .2s;
+    display:flex;align-items:center;justify-content:center;gap:8px;
+  }
+  .btn:hover{background:rgba(255,255,255,.1);transform:translateY(-1px);}
+  .btn-primary{
+    background:linear-gradient(135deg,var(--accent1),var(--accent3));
+    border:none;
+  }
+  .btn-primary:hover{opacity:.9;}
+  .btn-success{background:rgba(16,185,129,.15);border-color:rgba(16,185,129,.3);color:var(--good);}
+  .btn-warning{background:rgba(245,158,11,.15);border-color:rgba(245,158,11,.3);color:#f59e0b;}
+  .btn svg{width:18px;height:18px;}
+  
+  /* Quiz Card */
+  .quiz-card{
+    background:var(--glass);backdrop-filter:blur(20px);
+    border:1px solid var(--border);border-radius:24px;
+    overflow:hidden;
+  }
+  
+  /* Progress Header */
+  .progress-header{
+    background:linear-gradient(135deg,rgba(99,102,241,.1),rgba(236,72,153,.1));
+    padding:20px 24px;border-bottom:1px solid var(--border);
+  }
+  .progress-info{
+    display:flex;align-items:center;justify-content:space-between;
+    flex-wrap:wrap;gap:12px;margin-bottom:12px;
+  }
+  .lecture-badge{
+    display:inline-flex;align-items:center;gap:8px;
+    background:rgba(99,102,241,.2);border:1px solid rgba(99,102,241,.3);
+    padding:8px 14px;border-radius:10px;font-size:13px;font-weight:500;
+  }
+  .lecture-badge svg{width:16px;height:16px;color:var(--accent1);}
+  .q-counter{
+    font-size:14px;color:var(--muted);
+    display:flex;align-items:center;gap:6px;
+  }
+  .q-counter strong{color:var(--text);font-weight:600;}
+  .timer-badge{
+    display:flex;align-items:center;gap:8px;
+    background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.3);
+    padding:8px 14px;border-radius:10px;font-size:14px;font-weight:600;
+    color:#f59e0b;font-variant-numeric:tabular-nums;
+  }
+  .timer-badge svg{width:16px;height:16px;}
+  
+  .progress-bar{
+    height:8px;background:rgba(255,255,255,.1);border-radius:10px;overflow:hidden;
+  }
+  .progress-fill{
+    height:100%;width:0%;border-radius:10px;
+    background:linear-gradient(90deg,var(--accent1),var(--accent2));
+    transition:width .3s ease;
+  }
+  
+  /* Question Content */
+  .question-content{padding:28px 24px;}
+  .question-text{
+    font-size:20px;line-height:1.5;font-weight:500;margin:0 0 24px;
+  }
+  
+  /* Options */
+  .options-grid{display:flex;flex-direction:column;gap:12px;}
+  .option{
+    display:flex;align-items:flex-start;gap:14px;
+    padding:16px 18px;border-radius:14px;
+    border:2px solid var(--border);background:rgba(255,255,255,.03);
+    cursor:pointer;transition:all .2s;
+  }
+  .option:hover{
+    background:rgba(255,255,255,.06);
+    border-color:rgba(255,255,255,.2);
+    transform:translateX(4px);
+  }
+  .option-letter{
+    width:36px;height:36px;border-radius:10px;
+    display:flex;align-items:center;justify-content:center;
+    background:rgba(255,255,255,.06);border:1px solid var(--border);
+    font-weight:600;font-size:15px;color:var(--muted);
+    flex-shrink:0;transition:all .2s;
+  }
+  .option-text{
+    flex:1;font-size:15px;line-height:1.5;padding-top:6px;
+  }
+  .option.correct{
+    border-color:rgba(16,185,129,.5);
+    background:rgba(16,185,129,.1);
+  }
+  .option.correct .option-letter{
+    background:var(--good);color:#fff;border-color:var(--good);
+  }
+  .option.wrong{
+    border-color:rgba(239,68,68,.5);
+    background:rgba(239,68,68,.1);
+  }
+  .option.wrong .option-letter{
+    background:var(--bad);color:#fff;border-color:var(--bad);
+  }
+  .option[disabled]{cursor:default;pointer-events:none;}
+  
+  /* Explanation Box */
+  .explanation{
+    display:none;margin-top:20px;padding:20px;
+    background:linear-gradient(135deg,rgba(99,102,241,.1),rgba(139,92,246,.1));
+    border:1px solid rgba(99,102,241,.2);border-radius:14px;
+  }
+  .explanation.show{display:block;}
+  .explanation-title{
+    display:flex;align-items:center;gap:8px;
+    font-weight:600;margin-bottom:10px;color:var(--accent1);
+  }
+  .explanation-title svg{width:18px;height:18px;}
+  .explanation-text{font-size:14px;line-height:1.6;color:var(--muted);}
+  
+  /* Action Footer */
+  .action-footer{
+    padding:20px 24px;background:rgba(0,0,0,.2);
+    border-top:1px solid var(--border);
+  }
+  .score-display{
+    display:flex;align-items:center;justify-content:center;gap:24px;
+    flex-wrap:wrap;margin-bottom:16px;
+  }
+  .score-item{
+    display:flex;align-items:center;gap:8px;font-size:14px;
+  }
+  .score-dot{width:10px;height:10px;border-radius:50%;}
+  .score-dot.correct{background:var(--good);}
+  .score-dot.wrong{background:var(--bad);}
+  .score-dot.skipped{background:#f59e0b;}
+  
+  .action-buttons{
+    display:flex;gap:10px;flex-wrap:wrap;justify-content:space-between;
+  }
+  .action-left,.action-right{display:flex;gap:10px;flex-wrap:wrap;}
+  
+  .nav-btn{
+    display:flex;align-items:center;gap:8px;
+    background:rgba(255,255,255,.06);color:var(--text);
+    border:1px solid var(--border);padding:12px 18px;
+    border-radius:12px;font-size:14px;font-weight:500;
+    font-family:inherit;cursor:pointer;transition:all .2s;
+  }
+  .nav-btn:hover{background:rgba(255,255,255,.1);}
+  .nav-btn svg{width:18px;height:18px;}
+  .nav-btn.primary{
+    background:linear-gradient(135deg,var(--accent1),var(--accent2));
+    border:none;
+  }
+  
+  /* Keyboard Shortcuts */
+  .shortcuts{
+    text-align:center;padding:16px;color:var(--muted);font-size:13px;
+    border-top:1px solid var(--border);
+  }
+  .kbd{
+    display:inline-flex;align-items:center;justify-content:center;
+    min-width:26px;height:26px;padding:0 8px;
+    background:rgba(255,255,255,.1);border:1px solid var(--border);
+    border-radius:6px;font-family:monospace;font-size:12px;
+    margin:0 2px;
+  }
+  
+  /* Responsive */
+  @media(max-width:640px){
+    .hero{padding:40px 16px 30px;}
+    .hero-stats{gap:24px;}
+    .control-row{grid-template-columns:1fr;}
+    .question-content{padding:20px 16px;}
+    .action-buttons{flex-direction:column;}
+    .action-left,.action-right{width:100%;justify-content:center;}
+  }
+  
+  /* Animations */
+  @keyframes slideUp{
+    from{opacity:0;transform:translateY(20px);}
+    to{opacity:1;transform:translateY(0);}
+  }
+  .quiz-card{animation:slideUp .5s ease;}
+  
+  /* Site Footer */
+  .site-footer{
+    text-align:center;padding:40px 20px;margin-top:40px;
+    border-top:1px solid var(--border);
+    background:linear-gradient(180deg,transparent,rgba(99,102,241,.05));
+  }
+  .site-footer p{
+    margin:0;color:var(--muted);font-size:14px;
+  }
+  .site-footer a{
+    color:var(--accent1);text-decoration:none;font-weight:600;
+    transition:all .2s;
+  }
+  .site-footer a:hover{
+    color:var(--accent2);text-decoration:underline;
+  }
+  .site-footer .heart{
+    color:#ec4899;display:inline-block;
+    animation:pulse 1.5s ease infinite;
+  }
+  @keyframes pulse{
+    0%,100%{transform:scale(1);}
+    50%{transform:scale(1.2);}
+  }
+</style>
+</head>
+<body>
+<div class="bg-animation"></div>
+
+<!-- Hero Section -->
+<section class="hero" id="heroSection">
+  <div class="hero-badge">
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+    </svg>
+    <span>Management of Technology</span> • MCQ Practice
+  </div>
+  <h1>Master Your MoT Exam</h1>
+  <p class="hero-subtitle">
+    Comprehensive quiz platform with 200 carefully crafted MCQs covering all 11 lectures. 
+    Practice smart, track progress, and ace your exams!
+  </p>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-value">200</div>
+      <div class="stat-label">Questions</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">11</div>
+      <div class="stat-label">Lectures</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">2hr</div>
+      <div class="stat-label">Exam Mode</div>
+    </div>
+  </div>
+  <button class="start-btn" id="startBtn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <polygon points="5 3 19 12 5 21 5 3"/>
+    </svg>
+    Start Learning
+  </button>
+</section>
+
+<!-- Quiz App -->
+<div class="app-container" id="appContainer">
+  <div class="control-bar">
+    <div class="control-row">
+      <div class="select-wrapper">
+        <select id="mode">
+          <option value="sequential">📚 Practice: Sequential</option>
+          <option value="random">🎲 Practice: Random Order</option>
+        </select>
+      </div>
+      <div class="select-wrapper">
+        <select id="lectureFilter">
+          <option value="ALL">📖 All Lectures</option>
+        </select>
+      </div>
+      <div class="select-wrapper">
+        <select id="examMode">
+          <option value="off">✏️ Exam Mode: OFF</option>
+          <option value="on">⏰ Exam Mode: ON (60 Q / 2hr)</option>
+        </select>
+      </div>
+    </div>
+    <div class="btn-group">
+      <button class="btn btn-primary" id="restart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+          <path d="M3 3v5h5"/>
+        </svg>
+        Restart
+      </button>
+      <button class="btn btn-success" id="reviewWrong">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 11l3 3L22 4"/>
+          <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+        </svg>
+        Review Wrong
+      </button>
+      <button class="btn btn-warning" id="export">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        Export
+      </button>
+    </div>
+  </div>
+
+  <div class="quiz-card">
+    <div class="progress-header">
+      <div class="progress-info">
+        <div class="lecture-badge" id="pillLecture">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+          </svg>
+          <span>Lecture</span>
+        </div>
+        <div class="q-counter" id="pillCount">
+          Question <strong>1</strong> of <strong>200</strong>
+        </div>
+        <div class="timer-badge" id="pillTimer" style="display:none;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+          <span>02:00:00</span>
+        </div>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="bar"></div>
+      </div>
+    </div>
+
+    <div class="question-content">
+      <p class="question-text" id="qtext">Loading question...</p>
+      <div class="options-grid" id="opts"></div>
+      <div class="explanation" id="explain">
+        <div class="explanation-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+          Explanation
+        </div>
+        <p class="explanation-text"></p>
+      </div>
+    </div>
+
+    <div class="action-footer">
+      <div class="score-display" id="score">
+        <div class="score-item">
+          <span class="score-dot correct"></span>
+          <span><strong id="correctCount">0</strong> Correct</span>
+        </div>
+        <div class="score-item">
+          <span class="score-dot wrong"></span>
+          <span><strong id="wrongCount">0</strong> Wrong</span>
+        </div>
+        <div class="score-item">
+          <span class="score-dot skipped"></span>
+          <span><strong id="skippedCount">0</strong> Skipped</span>
+        </div>
+      </div>
+      <div class="action-buttons">
+        <div class="action-left">
+          <button class="nav-btn" id="showExplain">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="16" x2="12" y2="12"/>
+              <line x1="12" y1="8" x2="12.01" y2="8"/>
+            </svg>
+            Explain
+          </button>
+          <button class="nav-btn" id="skip">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="5 4 15 12 5 20 5 4"/>
+              <line x1="19" y1="5" x2="19" y2="19"/>
+            </svg>
+            Skip
+          </button>
+          <button class="nav-btn" id="prev">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="15 18 9 12 15 6"/>
+            </svg>
+            Previous
+          </button>
+        </div>
+        <div class="action-right">
+          <button class="nav-btn primary" id="next">
+            Next
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="shortcuts">
+      <span class="kbd">A</span><span class="kbd">B</span><span class="kbd">C</span><span class="kbd">D</span> Answer •
+      <span class="kbd">N</span> Next • <span class="kbd">P</span> Previous • <span class="kbd">E</span> Explanation
+    </div>
+  </div>
+  
+  <footer class="site-footer">
+    <p>Developed with <span class="heart">❤</span> by <a href="https://kavishkalk.online" target="_blank">kavishkalk</a></p>
+  </footer>
+</div>
+
+<script>
+/* =========================
+   200 MCQs (Lecture-wise)
+   ========================= */
+const ALL_QUESTIONS = [
+/* ================== LECTURE 1: INTRO MoT (25) ================== */
+{lecture:"Lecture 1 – Introduction to MoT",q:"Which option BEST defines Technology (Khalil)?",options:["Study of natural phenomena","Machines and equipment only","Knowledge, products, processes, tools, methods and systems used to create goods/services","Scientific research without application"],answer:2,explanation:"Khalil: tech includes knowledge + products + processes + tools + methods + systems for goods/services."},
+{lecture:"Lecture 1 – Introduction to MoT",q:"Science is BEST described as:",options:["Applying knowledge to produce goods","Study of why natural phenomena occur","Use of machines to improve efficiency","Commercialization of inventions"],answer:1,explanation:"Science explains why; technology applies knowledge."},
+{lecture:"Lecture 1 – Introduction to MoT",q:"Technology is mainly the:",options:["Study of society","Application of science/engineering to improve efficiency","Same as religion","Opposite of innovation"],answer:1,explanation:"Technology applies science/engineering to create improvements and solutions."},
+{lecture:"Lecture 1 – Introduction to MoT",q:"Which component of technology refers to physical products/equipment?",options:["Hardware","Software","Brainware","Middleware"],answer:0,explanation:"Hardware = physical product."},
+{lecture:"Lecture 1 – Introduction to MoT",q:"Which component refers to knowledge of how to use hardware?",options:["Hardware","Software","Brainware","None"],answer:1,explanation:"Software = know-how to operate hardware."},
+{lecture:"Lecture 1 – Introduction to MoT",q:"Brainware refers to:",options:["Computer chips","Reasons/logic for using technology in a particular way","Instruction manuals only","Patents only"],answer:1,explanation:"Brainware = rationale/logic behind use."},
+{lecture:"Lecture 1 – Introduction to MoT",q:"Which is NOT a salient feature of technology?",options:["Change","Self-reinforcing","Amoral","Always ethical"],answer:3,explanation:"Technology is amoral; ethics depend on usage. Not 'always ethical'."},
+{lecture:"Lecture 1 – Introduction to MoT",q:"Technology is called 'amoral' because:",options:["It is illegal","It is value neutral; moral value depends on use","It is always harmful","It cannot be studied"],answer:1,explanation:"Amoral = neither moral nor immoral by itself."},
+{lecture:"Lecture 1 – Introduction to MoT",q:"New technology in classification means:",options:["Invented this year only","First time introduced in a new situation/organization","Always not commercialized","Always low-cost"],answer:1,explanation:"‘New’ when introduced first time in a context and changes production/service."},
+{lecture:"Lecture 1 – Introduction to MoT",q:"Emerging technology is:",options:["Already mature and fully commercialized","Not fully commercialized but expected to be commercial soon","Always obsolete","Only low-tech"],answer:1,explanation:"Emerging tech may be limited-use now but expected to evolve soon."},
+{lecture:"Lecture 1 – Introduction to MoT",q:"Tacit knowledge is BEST transferred by:",options:["Observation and experience","Engineering drawings","Databases only","Formal laws"],answer:0,explanation:"Tacit = learned by doing/observing; hard to codify."},
+{lecture:"Lecture 1 – Introduction to MoT",q:"Codified knowledge is:",options:["Unwritten experience","Expressed in coded form and easy to preserve/transfer","Only physical machines","Always secret"],answer:1,explanation:"Codified = documented/coded form (e.g., drawings/specs)." },
+{lecture:"Lecture 1 – Introduction to MoT",q:"Which is an example of codified technology?",options:["A technician’s experience","Observation skills","Engineering drawing with tolerances","Trial-and-error memory"],answer:2,explanation:"Engineering drawings are codified knowledge."},
+{lecture:"Lecture 1 – Introduction to MoT",q:"High technology is typically:",options:["Advanced and sophisticated","Widely common and simple","Always manual","Always cheap"],answer:0,explanation:"High-tech = advanced/sophisticated."},
+{lecture:"Lecture 1 – Introduction to MoT",q:"Low technology is typically:",options:["Rare in society","Widely permeated through society","Always patented","Only in labs"],answer:1,explanation:"Low-tech = common, widely used."},
+{lecture:"Lecture 1 – Introduction to MoT",q:"Management process includes:",options:["Planning, organizing, leading, controlling","Buying, selling, billing, shipping","Coding, testing, deploying, maintaining","Auditing, taxation, litigation, banking"],answer:0,explanation:"Core management functions."},
+{lecture:"Lecture 1 – Introduction to MoT",q:"MoT (Management of Technology) is:",options:["Only engineering","Only marketing","Interdisciplinary: science + engineering + management","Only accounting"],answer:2,explanation:"MoT integrates engineering/science with management."},
+{lecture:"Lecture 1 – Introduction to MoT",q:"A key role of MoT is to help decide:",options:["Office paint color","When to enter/abandon a technology","Only HR benefits","Only tax policy"],answer:1,explanation:"MoT includes timing of entry/exit in technologies."},
+{lecture:"Lecture 1 – Introduction to MoT",q:"Competitive advantage comes mainly from:",options:["Development only","Application of technology to create value","Avoiding innovation","Copying without change"],answer:1,explanation:"Applying/commercializing tech creates advantage."},
+{lecture:"Lecture 1 – Introduction to MoT",q:"Drivers of MoT include all EXCEPT:",options:["Rapid technological change","Global competition","Knowledge management focus","Stable markets with no change"],answer:3,explanation:"MoT is needed because environments are NOT stable."},
+{lecture:"Lecture 1 – Introduction to MoT",q:"McKinsey 7S includes:",options:["Strategy, Structure, Systems, Skills, Staff, Style, Shared values","Strategy, Sales, Shipping, Stock, Staff, Style, Sharing","Systems, Science, Society, Skills, Staff, Savings, Safety","Structure, Staff, Stock, Skills, Sales, Style, Standards"],answer:0,explanation:"7S: Strategy, Structure, Systems, Skills, Staff, Style, Shared values."},
+{lecture:"Lecture 1 – Introduction to MoT",q:"Entrepreneurs create results by:",options:["Keeping technology in labs","Applying technology to create benefits","Avoiding customers","Stopping innovation"],answer:1,explanation:"Entrepreneurs convert technology into commercial value."},
+{lecture:"Lecture 1 – Introduction to MoT",q:"Paper entrepreneurs are MOST linked with:",options:["Law/finance/accountancy, deals like joint ventures","Prototype building only","Manufacturing only","Customer support only"],answer:0,explanation:"Paper entrepreneurs manipulate systems/finance/legal structures."},
+{lecture:"Lecture 1 – Introduction to MoT",q:"Product entrepreneurs are MOST linked with:",options:["Legal paperwork only","Innovation, product creation and commercialization","Tax audits only","Avoiding new ideas"],answer:1,explanation:"Product entrepreneurs focus on products/innovation."},
+{lecture:"Lecture 1 – Introduction to MoT",q:"Which statement is TRUE about technology?",options:["Technology has widespread effects","Technology never changes","Technology is simple","Technology is always moral"],answer:0,explanation:"Technology often creates widespread impacts."},
+
+/* ================== LECTURE 2: HIGH-TECH CHALLENGES (20) ================== */
+{lecture:"Lecture 2 – Challenges of Managing High Technology",q:"A common characteristic of high-tech businesses is:",options:["Low uncertainty","High task complexity and risk","No deadlines","No stakeholders"],answer:1,explanation:"High-tech businesses face complexity, risk, uncertainty."},
+{lecture:"Lecture 2 – Challenges of Managing High Technology",q:"Today’s high-tech environment is described as:",options:["Low risk and slow change","High risk with opportunity for big gains","No competition","No innovation"],answer:1,explanation:"New technologies create high risks but high rewards."},
+{lecture:"Lecture 2 – Challenges of Managing High Technology",q:"High-tech businesses often face:",options:["Stable regulations forever","Fast-changing market, technology and regulations","No global markets","No resource constraints"],answer:1,explanation:"Rapid changes are common."},
+{lecture:"Lecture 2 – Challenges of Managing High Technology",q:"Competition scope is:",options:["Limited by national boundaries","Global and open markets","Only within one city","Only within one company"],answer:1,explanation:"Globalization increases competition beyond borders."},
+{lecture:"Lecture 2 – Challenges of Managing High Technology",q:"Schedules in high-tech projects are usually:",options:["Flexible and optional","End-date-driven and tight","Not required","Always long and relaxed"],answer:1,explanation:"Projects are deadline-driven."},
+{lecture:"Lecture 2 – Challenges of Managing High Technology",q:"Resource constraint means:",options:["Unlimited budget","Limited resources with tough performance requirements","No need for people","No need for time"],answer:1,explanation:"High-tech often must do more with less."},
+{lecture:"Lecture 2 – Challenges of Managing High Technology",q:"Joint ventures/alliances increase challenge because of:",options:["Single culture only","Different organizational cultures/values","No stakeholders","No communication needed"],answer:1,explanation:"Partnerships create cultural/values complexity."},
+{lecture:"Lecture 2 – Challenges of Managing High Technology",q:"Technology Management runs parallel to:",options:["General management","Only marketing","Only engineering","Only finance"],answer:0,explanation:"It includes planning/organizing/coordinating/integrating resources."},
+{lecture:"Lecture 2 – Challenges of Managing High Technology",q:"MoT (management of technology) focuses on:",options:["Creating value using technology with organizational resources","Only operating machines","Only coding software","Only accounting"],answer:0,explanation:"MoT = art and science of creating value using technology."},
+{lecture:"Lecture 2 – Challenges of Managing High Technology",q:"High market responsiveness means:",options:["Ignore customers","Quickly adapt to market needs","Never change product","Slow decisions"],answer:1,explanation:"Respond fast to market changes."},
+{lecture:"Lecture 2 – Challenges of Managing High Technology",q:"A key additional challenge is need for:",options:["No people skills","Sophisticated people skills to handle conflicts/politics","Only technical skills","No communication"],answer:1,explanation:"High-tech needs strong people-management skills."},
+{lecture:"Lecture 2 – Challenges of Managing High Technology",q:"Virtual organizations increase importance of:",options:["Paper filing systems","IT and e-business","Typewriters","Local-only sales"],answer:1,explanation:"Virtual operations rely on IT/e-business."},
+{lecture:"Lecture 2 – Challenges of Managing High Technology",q:"Which is NOT a high-tech business characteristic?",options:["Intense competition","Fast change","Low uncertainty always","Complex stakeholders"],answer:2,explanation:"High-tech has high uncertainty, not low."},
+{lecture:"Lecture 2 – Challenges of Managing High Technology",q:"Resulting demand from high-tech environment includes:",options:["Low creativity","Fast development","High cost and slow response","Less innovation"],answer:1,explanation:"Demand: fast development + innovation + efficiency."},
+{lecture:"Lecture 2 – Challenges of Managing High Technology",q:"Technology and its management are:",options:["New phenomena only in 2020s","Not new; people managed tech historically","Impossible to manage","Only for governments"],answer:1,explanation:"People have always used and managed technology."},
+{lecture:"Lecture 2 – Challenges of Managing High Technology",q:"Stakeholder communities in high-tech are often:",options:["Simple and single","Complex with many stakeholders","Not relevant","Always same"],answer:1,explanation:"High-tech has complex stakeholder environments."},
+{lecture:"Lecture 2 – Challenges of Managing High Technology",q:"High-tech environment pushes companies toward:",options:["Effectiveness, value, and speed","Slow change and stability","Avoiding technology","Less competition"],answer:0,explanation:"Slides emphasize effectiveness/value/speed."},
+{lecture:"Lecture 2 – Challenges of Managing High Technology",q:"The scope of MoT overlaps mainly with:",options:["Sports and art only","Science, engineering and management","Only biology","Only literature"],answer:1,explanation:"MoT boundaries overlap science/engineering/management."},
+{lecture:"Lecture 2 – Challenges of Managing High Technology",q:"A common pressure on organizations is to do tasks:",options:["Slower and with more resources","Faster, better, with fewer resources","Without goals","Without customers"],answer:1,explanation:"‘Do more faster, better, with fewer resources’."},
+{lecture:"Lecture 2 – Challenges of Managing High Technology",q:"Which is a demand outcome?",options:["Low market responsiveness","High responsiveness + low cost + innovation","Less creativity","More delays"],answer:1,explanation:"Demand: responsiveness, speed, low cost, innovation."},
+
+/* ================== LECTURE 3: TECHNOLOGY LIFE CYCLE (20) ================== */
+{lecture:"Lecture 3 – Technology Life Cycle",q:"The performance of a technology over time follows a:",options:["Random line","Recognized pattern (S-curve)","Flat line always","Circular line always"],answer:1,explanation:"Slides: technology performance has a recognized pattern; often S-curve."},
+{lecture:"Lecture 3 – Technology Life Cycle",q:"S-curve shows:",options:["Slow → rapid → slowing at limits","Always linear growth","Instant maturity","No stages"],answer:0,explanation:"S-curve: slow initial, rapid growth, then slows near limits."},
+{lecture:"Lecture 3 – Technology Life Cycle",q:"In S-curve stages, Innovation means:",options:["Obsolescence","Birth of new product/process from R&D","Full market saturation","Only marketing"],answer:1,explanation:"Innovation = birth from R&D spending."},
+{lecture:"Lecture 3 – Technology Life Cycle",q:"Syndication refers to:",options:["Demonstration/commercialization with slow initial growth","Rapid market penetration","Replacement by new tech","Technology death"],answer:0,explanation:"Syndication = early commercialization stage."},
+{lecture:"Lecture 3 – Technology Life Cycle",q:"Diffusion/growth stage is:",options:["Rapid and sustained market growth","No adoption","Only lab testing","At natural limits"],answer:0,explanation:"Diffusion = broad adoption/penetration."},
+{lecture:"Lecture 3 – Technology Life Cycle",q:"Substitution/mature stage begins when:",options:["Tech approaches natural limits","Tech is newly invented","No competition exists","R&D just started"],answer:0,explanation:"Near upper limit; progress slows; substitutes appear."},
+{lecture:"Lecture 3 – Technology Life Cycle",q:"Neglecting technology life-cycle patterns may be:",options:["Always harmless","Costly to competitive position","Required by law","Best practice"],answer:1,explanation:"Slides: neglecting pattern may be costly competitively."},
+{lecture:"Lecture 3 – Technology Life Cycle",q:"Life cycle understanding helps mainly in:",options:["Strategic planning","Only payroll","Only office design","Only taxation"],answer:0,explanation:"Used in strategic planning/timing."},
+{lecture:"Lecture 3 – Technology Life Cycle",q:"A technology cycle ends when:",options:["Technology reaches limits and is replaced","Sales start","Prototype is built","Patent is filed"],answer:0,explanation:"Cycle ends when technology reaches limits and substitution occurs."},
+{lecture:"Lecture 3 – Technology Life Cycle",q:"A key MOT concept: when tech reaches natural limits it becomes:",options:["More scalable forever","Mature and candidate for substitution","Always cheaper","Always illegal"],answer:1,explanation:"At limits, substitution begins and new S-curve starts."},
+{lecture:"Lecture 3 – Technology Life Cycle",q:"Which is an example of substitution mentioned in slides?",options:["Vacuum tube replaced by transistor","Transistor replaced by vacuum tube","Digital camera replaced by film only","None"],answer:0,explanation:"Example: vacuum tubes limited; transistor starts new life cycle."},
+{lecture:"Lecture 3 – Technology Life Cycle",q:"Diffusion stage is driven by:",options:["User acceptance and market penetration","No customers","Only internal tests","No competition"],answer:0,explanation:"Acceptance by potential users drives diffusion."},
+{lecture:"Lecture 3 – Technology Life Cycle",q:"S-curve performance can be measured by:",options:["Any performance attribute (e.g., speed, transistors)","Only profit","Only staff count","Only office size"],answer:0,explanation:"Performance can be any attribute."},
+{lecture:"Lecture 3 – Technology Life Cycle",q:"Early stage typically requires:",options:["Significant R&D effort and money","No investment","Only marketing","Only layoffs"],answer:0,explanation:"Innovation stage requires heavy R&D investment."},
+{lecture:"Lecture 3 – Technology Life Cycle",q:"‘Upper limit approached’ means:",options:["Performance improves faster","Progress slows down","No learning","No customers"],answer:1,explanation:"Near limits, performance improvements slow."},
+{lecture:"Lecture 3 – Technology Life Cycle",q:"Syndication is MOST linked with:",options:["Demonstration/commercialization","Technology death","Market saturation","Government taxes"],answer:0,explanation:"Syndication = demonstration and commercialization."},
+{lecture:"Lecture 3 – Technology Life Cycle",q:"Diffusion is MOST linked with:",options:["Rapid adoption","Slow initial growth","No market","Substitution only"],answer:0,explanation:"Diffusion = rapid adoption."},
+{lecture:"Lecture 3 – Technology Life Cycle",q:"A firm ignoring life cycle may risk:",options:["Better competitiveness","Losing competitive position","Automatic monopoly","No effect"],answer:1,explanation:"Planning without life-cycle can be costly."},
+{lecture:"Lecture 3 – Technology Life Cycle",q:"Technology life spans can be identified as:",options:["Distinct stages/phases","Only one stage","No stages","Only marketing stages"],answer:0,explanation:"Slides: life span consists of distinct stages."},
+{lecture:"Lecture 3 – Technology Life Cycle",q:"Technology substitution phase indicates:",options:["No new tech appears","New tech replaces old tech","Old tech improves forever","No market demand"],answer:1,explanation:"Substitution = replacement by newer better technology."},
+
+/* ================== LECTURE 4: STRATEGIC MANAGEMENT OF TECHNOLOGY (20) ================== */
+{lecture:"Lecture 4 – Strategic Management of Technology",q:"Strategy is BEST defined as:",options:["A set of actions to reach a desired destination","Daily routine only","Random decisions","Only budgeting"],answer:0,explanation:"Strategy = set of actions to reach desired state/destination."},
+{lecture:"Lecture 4 – Strategic Management of Technology",q:"Strategic management is the continuous process of:",options:["Only implementation","Formulation, implementation, evaluation/control","Only evaluation","Only hiring"],answer:1,explanation:"Three core stages."},
+{lecture:"Lecture 4 – Strategic Management of Technology",q:"Strategic management focuses mainly on:",options:["Short term (days)","Long term (generally >3 years)","Only hourly tasks","Only payroll"],answer:1,explanation:"Long-term focus."},
+{lecture:"Lecture 4 – Strategic Management of Technology",q:"Systems perspective means:",options:["Whole is greater than sum of parts","Parts are unrelated","Whole is less than parts","No coordination"],answer:0,explanation:"Systems view: interactions make whole greater."},
+{lecture:"Lecture 4 – Strategic Management of Technology",q:"Stages of strategic management include:",options:["Formulation, implementation, evaluation/control","Planning, hiring, firing","Design, coding, testing","Buying, selling, shipping"],answer:0,explanation:"Those are the three stages in slides."},
+{lecture:"Lecture 4 – Strategic Management of Technology",q:"Strategy formulation involves:",options:["Assess external & internal environment to set objectives/strategy","Only executing tasks","Only controlling workers","Only auditing"],answer:0,explanation:"Formulation includes assessing environments and setting direction."},
+{lecture:"Lecture 4 – Strategic Management of Technology",q:"Strategy implementation involves:",options:["Adjusting value chain to fit strategy","Only writing mission statements","Only raising loans","Only ignoring operations"],answer:0,explanation:"Implementation aligns activities/value chain."},
+{lecture:"Lecture 4 – Strategic Management of Technology",q:"Strategy evaluation and control involves:",options:["Comparing outcomes and taking corrective actions","Never changing plan","Only celebrating success","Only marketing"],answer:0,explanation:"Evaluate vs targets and correct."},
+{lecture:"Lecture 4 – Strategic Management of Technology",q:"PEST analysis examines:",options:["Macro environment opportunities/threats","Factory layout","Employee skills only","Project schedule"],answer:0,explanation:"PEST = macro environment analysis."},
+{lecture:"Lecture 4 – Strategic Management of Technology",q:"Porter’s Five Forces examines:",options:["Industry competitive forces","Personal ethics","Macro climate only","Team motivation"],answer:0,explanation:"Five Forces = industry/competition analysis."},
+{lecture:"Lecture 4 – Strategic Management of Technology",q:"Technology strategy is an overall plan consisting of:",options:["Objectives, principles, tactics for using technologies","Only HR rules","Only sales targets","Only accounting entries"],answer:0,explanation:"Slides: objectives/principles/tactics relating to tech use."},
+{lecture:"Lecture 4 – Strategic Management of Technology",q:"A technology-related strategy can be:",options:["Implied from behaviors and/or documented","Always secret only","Only verbal always","Not connected to decisions"],answer:0,explanation:"Strategy may be implied or written."},
+{lecture:"Lecture 4 – Strategic Management of Technology",q:"Technology strategy can guide:",options:["Acquisition, allocation and management of IT resources","Only product packaging","Only payroll","Only office decoration"],answer:0,explanation:"Slides: guides acquisition/allocation/management of resources."},
+{lecture:"Lecture 4 – Strategic Management of Technology",q:"Strategic management is continuous because:",options:["Environment changes and strategy needs review","Company never changes","No evaluation needed","Only for startups"],answer:0,explanation:"Continuous due to changing environments."},
+{lecture:"Lecture 4 – Strategic Management of Technology",q:"A tool for macro environment analysis is:",options:["PEST","5 Forces","Span of control","Kohlberg"],answer:0,explanation:"PEST is macro environment tool."},
+{lecture:"Lecture 4 – Strategic Management of Technology",q:"A tool for industry structure analysis is:",options:["Porter’s Five Forces","SMART goals","McKinsey 7S","MBO"],answer:0,explanation:"Five Forces examines industry competition."},
+{lecture:"Lecture 4 – Strategic Management of Technology",q:"Implementation success requires:",options:["Alignment of operations with strategy","Ignoring resources","Only slogans","No coordination"],answer:0,explanation:"Implementation aligns value chain and resources."},
+{lecture:"Lecture 4 – Strategic Management of Technology",q:"Evaluation compares:",options:["Outcomes vs intended outcomes","Employee height vs weight","Office size vs color","Logo vs font"],answer:0,explanation:"Compare actual vs intended and correct."},
+{lecture:"Lecture 4 – Strategic Management of Technology",q:"Systems perspective suggests:",options:["Interdependence among parts","No relationships between parts","Only one department matters","Strategy is irrelevant"],answer:0,explanation:"System = interdependent parts."},
+{lecture:"Lecture 4 – Strategic Management of Technology",q:"Technology strategies primarily focus on:",options:["Technologies and sometimes the people who manage them","Only legal departments","Only sports teams","Only customer complaints"],answer:0,explanation:"Slides: focuses on technologies and tech managers."},
+
+/* ================== LECTURE 5: ORGANIZATIONAL ASPECTS (20) ================== */
+{lecture:"Lecture 5 – Organizational Aspect of MoT",q:"Organizational structure (Daft) includes:",options:["Formal tasks, reporting relationships, coordination systems","Only informal friendships","Only building design","Only salaries"],answer:0,explanation:"Daft: tasks + reporting + coordination systems."},
+{lecture:"Lecture 5 – Organizational Aspect of MoT",q:"Authority means:",options:["Formal legitimate power to make decisions","Obligation to fulfill authority","Number of subordinates","Employee motivation"],answer:0,explanation:"Authority = legitimate decision power."},
+{lecture:"Lecture 5 – Organizational Aspect of MoT",q:"Responsibility means:",options:["Obligation to fulfill authority","Formal power","Answerability to superior","Number of workers"],answer:0,explanation:"Responsibility = obligation to perform duties."},
+{lecture:"Lecture 5 – Organizational Aspect of MoT",q:"Accountability means:",options:["Justify outcomes of authority/responsibility to superior","Transfer authority to employees","Break chain of command","Reduce span of control"],answer:0,explanation:"Accountability = answerability/justification."},
+{lecture:"Lecture 5 – Organizational Aspect of MoT",q:"Chain of command is:",options:["Unbroken line of authority across members","Random network of power","Only informal influence","Only customer service"],answer:0,explanation:"Chain of command is unbroken authority line."},
+{lecture:"Lecture 5 – Organizational Aspect of MoT",q:"Span of control refers to:",options:["Number of subordinates reporting to a manager","Number of products","Amount of profit","Office area"],answer:0,explanation:"Span of control = reporting count."},
+{lecture:"Lecture 5 – Organizational Aspect of MoT",q:"Centralization means authority is mainly in:",options:["Top layers (tall hierarchy)","Lower layers (flat)","No layers","Customers"],answer:0,explanation:"Centralization concentrates authority at top."},
+{lecture:"Lecture 5 – Organizational Aspect of MoT",q:"Decentralization tends to create:",options:["Flat hierarchy with authority lower","Tall hierarchy always","No delegation","No empowerment"],answer:0,explanation:"Decentralization pushes authority downward."},
+{lecture:"Lecture 5 – Organizational Aspect of MoT",q:"Delegation is:",options:["Transfer authority to next managerial layer","Transfer authority to non-managerial layer","Remove all authority","Remove accountability"],answer:0,explanation:"Delegation = to next immediate managerial level."},
+{lecture:"Lecture 5 – Organizational Aspect of MoT",q:"Empowerment is:",options:["Transfer authority to non-managerial layer","Only top management decisions","Only delegation upward","No responsibility"],answer:0,explanation:"Empowerment gives authority to employees."},
+{lecture:"Lecture 5 – Organizational Aspect of MoT",q:"Functional structure is organized by:",options:["Similar skills/expertise/work activities","Geography only","Customer segments only","Random teams"],answer:0,explanation:"Functional grouping by specialization."},
+{lecture:"Lecture 5 – Organizational Aspect of MoT",q:"Divisional structure is organized by:",options:["Outputs/customer/geography segments","Only skills similarity","Only finance dept","No divisions"],answer:0,explanation:"Divisions around product/market/geography."},
+{lecture:"Lecture 5 – Organizational Aspect of MoT",q:"Team structure is organized by:",options:["Horizontal teams coordinating work","Only vertical departments","Only CEO office","Only suppliers"],answer:0,explanation:"Team structure uses horizontal teams."},
+{lecture:"Lecture 5 – Organizational Aspect of MoT",q:"Unity of command supports:",options:["One person reports to one boss","Multiple bosses always","No reporting lines","No coordination"],answer:0,explanation:"Unity of command = one boss per employee."},
+{lecture:"Lecture 5 – Organizational Aspect of MoT",q:"Scalar principle relates to:",options:["Clear chain of authority from top to bottom","Salary scale only","Technology scale only","Market scale"],answer:0,explanation:"Scalar principle = clear authority line."},
+{lecture:"Lecture 5 – Organizational Aspect of MoT",q:"A tall hierarchy is more likely under:",options:["Centralization","Decentralization","No authority","Team structure only"],answer:0,explanation:"Centralization tends to tall hierarchy."},
+{lecture:"Lecture 5 – Organizational Aspect of MoT",q:"A flat hierarchy is more likely under:",options:["Decentralization","Centralization","No structure","Only staff authority"],answer:0,explanation:"Decentralization tends to flatter structure."},
+{lecture:"Lecture 5 – Organizational Aspect of MoT",q:"Organizational chart is:",options:["Visual representation of structure","Financial report","Marketing plan","Training manual"],answer:0,explanation:"Org chart shows structure."},
+{lecture:"Lecture 5 – Organizational Aspect of MoT",q:"Staff authority usually:",options:["Advises and supports line authority","Directly controls production lines","Has no role","Replaces chain of command"],answer:0,explanation:"Staff supports line authority."},
+{lecture:"Lecture 5 – Organizational Aspect of MoT",q:"Line authority usually:",options:["Directly relates to core work producing/selling output","Only advisory","Only external partners","Only customers"],answer:0,explanation:"Line authority is tied to core operations."},
+
+/* ================== LECTURE 6: INNOVATION TYPES (20) ================== */
+{lecture:"Lecture 6 – Innovation Types",q:"The 4Ps of innovation are:",options:["Product, Process, Position, Paradigm","Price, Place, People, Profit","Plan, Produce, Promote, Protect","Policy, Program, Project, Procedure"],answer:0,explanation:"4Ps classification: Product/Process/Position/Paradigm."},
+{lecture:"Lecture 6 – Innovation Types",q:"Sustaining innovation generally:",options:["Targets demanding customers with better products; incumbents often win","Targets non-consumption with simpler cheaper products; entrants win","Always eliminates existing markets instantly","Never improves performance"],answer:0,explanation:"Sustaining improves performance for main customers; incumbents often win."},
+{lecture:"Lecture 6 – Innovation Types",q:"Disruptive innovation generally:",options:["Creates simpler/cheaper user-friendly products for new/less demanding customers","Always more complex and expensive","Only internal process change","Only marketing change"],answer:0,explanation:"Disruption starts at low-end/new markets and improves over time."},
+{lecture:"Lecture 6 – Innovation Types",q:"Two types of disruption are:",options:["New-market and low-end","High-end and premium","Domestic and foreign","Private and public"],answer:0,explanation:"Christensen: new-market disruption and low-end disruption."},
+{lecture:"Lecture 6 – Innovation Types",q:"New-market disruption competes with:",options:["Non-consumption","Only premium segments","Only government","Only incumbents’ suppliers"],answer:0,explanation:"It targets non-consumption: new users."},
+{lecture:"Lecture 6 – Innovation Types",q:"Low-end disruption focuses on:",options:["Lower tiers of main markets","Highest end customers","Only new industries","Only patents"],answer:0,explanation:"Low-end focuses on overserved customers and cheaper offers."},
+{lecture:"Lecture 6 – Innovation Types",q:"Open innovation means:",options:["Using internal and external ideas/paths to market","Only internal R&D","No collaboration","Avoid licensing"],answer:0,explanation:"Open innovation uses inflows/outflows of knowledge."},
+{lecture:"Lecture 6 – Innovation Types",q:"Closed innovation assumes:",options:["Innovation should mainly happen inside the firm","External ideas are always better","Customers design everything","Patents are useless"],answer:0,explanation:"Closed model relies mostly on internal R&D and internal commercialization."},
+{lecture:"Lecture 6 – Innovation Types",q:"Product innovation mainly changes:",options:["What is offered (goods/services/features)","Where it is sold only","Company culture only","Only accounting"],answer:0,explanation:"Product innovation changes the offering."},
+{lecture:"Lecture 6 – Innovation Types",q:"Process innovation mainly changes:",options:["How it is created/delivered","Price only","Logo only","Staff uniforms"],answer:0,explanation:"Process innovation changes production/delivery methods."},
+{lecture:"Lecture 6 – Innovation Types",q:"Position innovation mainly changes:",options:["Market context/target segment/positioning","Manufacturing tools only","Legal structure only","Only packaging"],answer:0,explanation:"Position innovation changes how/where the offering is framed."},
+{lecture:"Lecture 6 – Innovation Types",q:"Paradigm innovation mainly changes:",options:["Underlying business model/mental model","Only process steps","Only product color","Only staff count"],answer:0,explanation:"Paradigm = fundamental model shift."},
+{lecture:"Lecture 6 – Innovation Types",q:"Disruptive innovations often start by offering:",options:["Lower performance on traditional metrics but other advantages (cheaper, simpler)","Higher performance and higher price always","No value","Only patents"],answer:0,explanation:"Disruptors initially underperform on mainstream metrics but win on simplicity/price."},
+{lecture:"Lecture 6 – Innovation Types",q:"In sustaining innovation, the main customers are usually:",options:["Demanding existing customers","Non-consumers only","Only government","Only low-end"],answer:0,explanation:"Sustaining targets existing demanding customers."},
+{lecture:"Lecture 6 – Innovation Types",q:"Which statement is TRUE?",options:["Disruptive innovation often allows new entrants to win","Disruptive innovation always helps incumbents win","Open innovation forbids collaboration","Sustaining innovation targets non-consumption"],answer:0,explanation:"Disruptive innovation creates entry points for new firms."},
+{lecture:"Lecture 6 – Innovation Types",q:"Which is an advantage often mentioned for disruptive innovation?",options:["Cheaper and more user-friendly","Always more complex","Always premium-only","Always regulated"],answer:0,explanation:"Disruptors win via simplicity, affordability, convenience."},
+{lecture:"Lecture 6 – Innovation Types",q:"A company using user innovation + distributed innovation is closer to:",options:["Open innovation","Closed innovation","No innovation","Only sustaining innovation"],answer:0,explanation:"These are related to open innovation concepts."},
+{lecture:"Lecture 6 – Innovation Types",q:"Innovation categories shown include:",options:["Sustaining and disruptive","Ethical and unethical","Local and global","Manual and automatic"],answer:0,explanation:"Slides show sustaining vs disruptive."},
+{lecture:"Lecture 6 – Innovation Types",q:"Schumpeter’s broader innovation classification includes:",options:["Product, process, input, technology, organization","Price, place, promotion, people","Finance, law, HR, IT","Quality, risk, safety, ethics"],answer:0,explanation:"Schumpeter list shown on slides."},
+{lecture:"Lecture 6 – Innovation Types",q:"Position innovation example would BEST be:",options:["Selling the same product to a new customer segment","Changing raw material supplier only","Changing company logo only","Changing employee salaries"],answer:0,explanation:"Position changes market context/segment."},
+
+/* ================== LECTURE 7: ETHICS & SOCIAL RESPONSIBILITY (15) ================== */
+{lecture:"Lecture 7 – Ethics & Social Responsibility",q:"Ethical behavior is behavior that:",options:["Conforms to society’s accepted principles of right and wrong","Maximizes profit only","Always breaks rules","Ignores stakeholders"],answer:0,explanation:"Ethical behavior = conforms to accepted right/wrong."},
+{lecture:"Lecture 7 – Ethics & Social Responsibility",q:"Workplace deviance is:",options:["Unethical behavior violating organizational norms","Innovation process","Leadership style","Strategic planning"],answer:0,explanation:"Workplace deviance = unethical norm violation."},
+{lecture:"Lecture 7 – Ethics & Social Responsibility",q:"Which is NOT a listed type of workplace deviance?",options:["Production deviance","Property deviance","Political deviance","Market deviance"],answer:3,explanation:"Listed: production, property, political, personal aggression."},
+{lecture:"Lecture 7 – Ethics & Social Responsibility",q:"Ethical intensity means:",options:["Degree of concern people have about an ethical issue","Company size","Product price","Market share"],answer:0,explanation:"Ethical intensity = concern level."},
+{lecture:"Lecture 7 – Ethics & Social Responsibility",q:"Magnitude of consequences refers to:",options:["Total harm/benefit from an ethical decision","Distance to victim","Time delay","Probability it happens"],answer:0,explanation:"Magnitude = total harm/benefit."},
+{lecture:"Lecture 7 – Ethics & Social Responsibility",q:"Social consensus refers to:",options:["Agreement whether behavior is good/bad","Time delay","Distance to affected person","Chance it happens"],answer:0,explanation:"Social consensus = agreement on moral status."},
+{lecture:"Lecture 7 – Ethics & Social Responsibility",q:"Temporal immediacy refers to:",options:["Time between act and consequence","Distance to victim","Total harm","Agreement level"],answer:0,explanation:"Temporal immediacy = time gap."},
+{lecture:"Lecture 7 – Ethics & Social Responsibility",q:"Proximity of effect refers to:",options:["Distance between decision maker and affected person","Total harm","Agreement level","Time delay"],answer:0,explanation:"Proximity = closeness to affected people."},
+{lecture:"Lecture 7 – Ethics & Social Responsibility",q:"Concentration of effect refers to:",options:["How the act affects the average person","Distance to victim","Time delay","Company profit"],answer:0,explanation:"Concentration = distribution of impact across people."},
+{lecture:"Lecture 7 – Ethics & Social Responsibility",q:"Kohlberg’s moral development levels are:",options:["Preconventional, Conventional, Postconventional","Primary, Secondary, Tertiary","Alpha, Beta, Gamma","Basic, Medium, Advanced"],answer:0,explanation:"Three levels in Kohlberg’s model."},
+{lecture:"Lecture 7 – Ethics & Social Responsibility",q:"A practical step to ethical decision making includes:",options:["Hiring ethical employees + code of ethics + training","Hiding reporting systems","Punishing randomly","No standards"],answer:0,explanation:"Slides list integrity tests, code, training, ethical climate and reporting."},
+{lecture:"Lecture 7 – Ethics & Social Responsibility",q:"Codes of ethics should be:",options:["Communicated inside and outside the company","Kept secret","Only for managers","Only for customers"],answer:0,explanation:"Codes should be communicated widely."},
+{lecture:"Lecture 7 – Ethics & Social Responsibility",q:"Ethics training objectives include:",options:["Develop awareness, achieve credibility, teach practical model","Increase deviance","Hide issues","Avoid decisions"],answer:0,explanation:"Slides list these objectives."},
+{lecture:"Lecture 7 – Ethics & Social Responsibility",q:"Workplace deviance includes personal aggression such as:",options:["Harassment/abuse","Planning","Innovation","Budgeting"],answer:0,explanation:"Personal aggression is a deviance type."},
+{lecture:"Lecture 7 – Ethics & Social Responsibility",q:"Government requirements ethical principle implies:",options:["Never violate law (minimal moral standard)","Always maximize profit","Ignore rights","Only short-term interest"],answer:0,explanation:"Law represents minimal moral standards."},
+
+/* ================== LECTURE 8: PLANNING & DECISION MAKING (15) ================== */
+{lecture:"Lecture 8 – Planning & Decision Making",q:"Planning is:",options:["Choosing a goal and developing a strategy to achieve it","Only controlling employees","Only budgeting","Only advertising"],answer:0,explanation:"Planning = goal + method/strategy."},
+{lecture:"Lecture 8 – Planning & Decision Making",q:"A key benefit of planning is:",options:["Provides direction and persistence","Always prevents adaptation","Always creates uncertainty","Reduces effort always"],answer:0,explanation:"Benefits: direction, persistence, effort, strategies."},
+{lecture:"Lecture 8 – Planning & Decision Making",q:"A common pitfall of planning is:",options:["Creates false sense of certainty based on assumptions","Always increases creativity","Always speeds adaptation","Eliminates uncertainty"],answer:0,explanation:"Pitfalls include false certainty and slowing adaptation."},
+{lecture:"Lecture 8 – Planning & Decision Making",q:"SMART goals include:",options:["Specific, Measurable, Attainable, Realistic, Timely","Simple, Modern, Accurate, Rapid, True","Strong, Meaningful, Agile, Relevant, Tested","Safe, Managed, Approved, Reviewed, Timed"],answer:0,explanation:"SMART goal framework."},
+{lecture:"Lecture 8 – Planning & Decision Making",q:"Goal commitment means:",options:["Determination to achieve a goal","Avoiding goals","Only writing goals privately","Only setting long-term goals"],answer:0,explanation:"Goal commitment = determination."},
+{lecture:"Lecture 8 – Planning & Decision Making",q:"To increase goal commitment, a technique is:",options:["Set goals collectively","Hide goals","Avoid top management support","Never make goals public"],answer:0,explanation:"Techniques: collective goals, public goals, top support."},
+{lecture:"Lecture 8 – Planning & Decision Making",q:"An action plan lists:",options:["How, who, what, when","Only budget","Only deadline","Only risks"],answer:0,explanation:"Steps, people, resources, time period."},
+{lecture:"Lecture 8 – Planning & Decision Making",q:"Tracking progress includes:",options:["Set proximal and distal goals + provide feedback","Ignore feedback","Avoid reviews","No metrics"],answer:0,explanation:"Regular feedback supports adjustments."},
+{lecture:"Lecture 8 – Planning & Decision Making",q:"Options-based planning means:",options:["Keep options open via small simultaneous investments in alternatives","Choose one plan and lock it forever","Stop investing","Avoid learning"],answer:0,explanation:"Options-based planning keeps alternatives open."},
+{lecture:"Lecture 8 – Planning & Decision Making",q:"Slack resources are:",options:["Extra time/money used to adapt to unexpected changes","No resources","Only staff skills","Only marketing budget"],answer:0,explanation:"Slack = cushion resources."},
+{lecture:"Lecture 8 – Planning & Decision Making",q:"Top management primarily develops:",options:["Long-term strategic plans","Daily schedules","Only operational plans","Only reporting systems"],answer:0,explanation:"Top = strategic plans (2–5 years in slides)."},
+{lecture:"Lecture 8 – Planning & Decision Making",q:"Middle management primarily develops:",options:["Tactical plans to accomplish strategic objectives","Only strategic plans","Only mission statements","Only audits"],answer:0,explanation:"Middle = tactical plans (6 months–2 years)."},
+{lecture:"Lecture 8 – Planning & Decision Making",q:"MBO (Management by Objectives) includes:",options:["Discuss goals, select goals, develop plans, review progress","Only punish employees","Only hire staff","Only advertise"],answer:0,explanation:"4-step collaborative process."},
+{lecture:"Lecture 8 – Planning & Decision Making",q:"Purpose statement is:",options:["Declaration of purpose/mission/vision","Daily schedule","Payroll report","Customer complaint"],answer:0,explanation:"Purpose statement declares why organization exists."},
+{lecture:"Lecture 8 – Planning & Decision Making",q:"Strategic objectives should:",options:["Have a finish line and time frame","Be vague forever","Avoid challenge","Never unify efforts"],answer:0,explanation:"Strategic objectives unify and have timeframes."},
+
+/* ================== LECTURE 9: INNOVATION & CHANGE STREAMS (15) ================== */
+{lecture:"Lecture 9 – Innovation & Change",q:"Organizational innovation is:",options:["Successful implementation of creative ideas in organizations","Copying competitors only","Only R&D spending","Only marketing"],answer:0,explanation:"Innovation = implementing creative ideas successfully."},
+{lecture:"Lecture 9 – Innovation & Change",q:"Technology cycle begins with:",options:["Birth of a new technology","Obsolescence","Market saturation","No change"],answer:0,explanation:"Cycle begins at birth and ends when replaced."},
+{lecture:"Lecture 9 – Innovation & Change",q:"S-curve pattern of innovation shows:",options:["Slow initial progress then rapid progress (and later slows)","Always linear","Always instant","No pattern"],answer:0,explanation:"S-curve pattern described in slides."},
+{lecture:"Lecture 9 – Innovation & Change",q:"Technological discontinuity is:",options:["Major breakthrough advance causing significant performance change","Small incremental improvement","No change","Only marketing change"],answer:0,explanation:"Discontinuity = breakthrough."},
+{lecture:"Lecture 9 – Innovation & Change",q:"Design competition refers to:",options:["Several technologies compete to set new standard","Only one design exists","No customers buy","No innovation"],answer:0,explanation:"Multiple designs compete before standard emerges."},
+{lecture:"Lecture 9 – Innovation & Change",q:"Dominant design is:",options:["New market standard for technology","Temporary prototype","Old obsolete design","No standard"],answer:0,explanation:"Dominant design indicates winners/losers."},
+{lecture:"Lecture 9 – Innovation & Change",q:"Technological lockout means:",options:["Firms can be excluded after dominant design emerges","Easy entry always","No standards exist","Guaranteed profits"],answer:0,explanation:"Lockout is a threat to companies that lose the standard battle."},
+{lecture:"Lecture 9 – Innovation & Change",q:"After dominant design, innovation shifts to:",options:["Incremental improvements and cost reduction","Only discontinuous breakthroughs","No change","Only marketing"],answer:0,explanation:"Post-dominant design: incremental change."},
+{lecture:"Lecture 9 – Innovation & Change",q:"Experiential approach is best during:",options:["Discontinuous change (high uncertainty)","Stable environments only","No uncertainty","Only budgeting"],answer:0,explanation:"Experiential approach uses prototypes/testing to learn fast."},
+{lecture:"Lecture 9 – Innovation & Change",q:"Experiential approach includes:",options:["Design iterations, prototypes, testing, milestones, multifunctional teams","Only paperwork","Only advertising","Only audits"],answer:0,explanation:"These are the five aspects shown."},
+{lecture:"Lecture 9 – Innovation & Change",q:"Compression approach is best during:",options:["Incremental change (more certain)","Highly uncertain discontinuous change","No market","Only crises"],answer:0,explanation:"Compression squeezes/overlaps steps to speed incremental innovation."},
+{lecture:"Lecture 9 – Innovation & Change",q:"Compression approach includes overlapping steps and:",options:["Supplier involvement","No planning","No teams","No milestones"],answer:0,explanation:"Supplier involvement and overlapping steps help compress time."},
+{lecture:"Lecture 9 – Innovation & Change",q:"Creative work environments are cultures where:",options:["New ideas are welcomed, valued, and encouraged","New ideas are punished","Only managers innovate","No experiments happen"],answer:0,explanation:"Definition from slides."},
+{lecture:"Lecture 9 – Innovation & Change",q:"Flow experience is a psychological state of:",options:["Effortlessness and deep absorption","Stress only","Boredom only","Anger only"],answer:0,explanation:"Flow: absorbed, time passes quickly."},
+{lecture:"Lecture 9 – Innovation & Change",q:"During discontinuous change, firms must:",options:["Anticipate and survive technological changes","Avoid learning","Stop innovating","Ignore uncertainty"],answer:0,explanation:"Slides: MUST find ways to survive uncertain change."},
+
+/* ================== LECTURE 10: EXAM MIX – RISK/TEAMS/R&D/QUALITY (15) ================== */
+{lecture:"Lecture 10 – Risk, Teams, R&D (Exam Mix)",q:"Risk is BEST described as:",options:["Uncertainty that can affect objectives","A guaranteed loss only","A fixed cost","A solved issue"],answer:0,explanation:"Risk = uncertainty affecting outcomes."},
+{lecture:"Lecture 10 – Risk, Teams, R&D (Exam Mix)",q:"A common risk response strategy set is:",options:["Avoid, mitigate, transfer, accept","Ignore, deny, hide, blame","Buy, sell, ship, store","Plan, do, check, sleep"],answer:0,explanation:"Standard risk responses."},
+{lecture:"Lecture 10 – Risk, Teams, R&D (Exam Mix)",q:"Risk mitigation means:",options:["Reduce probability and/or impact","Increase probability","Ignore risks","Only insure always"],answer:0,explanation:"Mitigation reduces probability/impact."},
+{lecture:"Lecture 10 – Risk, Teams, R&D (Exam Mix)",q:"Risk transfer usually means:",options:["Shift risk to another party (e.g., insurance/contract)","Remove all uncertainty forever","Avoid planning","Increase scope"],answer:0,explanation:"Transfer shifts ownership/exposure."},
+{lecture:"Lecture 10 – Risk, Teams, R&D (Exam Mix)",q:"Quality management mainly focuses on:",options:["Meeting customer requirements consistently","Increasing defects","Ignoring variation","Only reducing cost"],answer:0,explanation:"Quality = meet requirements, reduce variation."},
+{lecture:"Lecture 10 – Risk, Teams, R&D (Exam Mix)",q:"R&D management should primarily:",options:["Align R&D with strategy and innovation goals","Be isolated from strategy","Stop experiments","Avoid learning"],answer:0,explanation:"R&D should support strategic objectives."},
+{lecture:"Lecture 10 – Risk, Teams, R&D (Exam Mix)",q:"Technology teams are MOST effective when they have:",options:["Clear goals, diverse skills, and strong communication","No goals","Only one skill type","No leadership"],answer:0,explanation:"Team effectiveness depends on clarity, diversity, communication."},
+{lecture:"Lecture 10 – Risk, Teams, R&D (Exam Mix)",q:"A multifunctional team typically includes people from:",options:["Different departments (technical, marketing, manufacturing etc.)","Only one department","Only external parties","Only top management"],answer:0,explanation:"Multifunctional teams integrate perspectives."},
+{lecture:"Lecture 10 – Risk, Teams, R&D (Exam Mix)",q:"A milestone in projects is:",options:["A formal project review point","A random meeting","A salary increase","A customer complaint"],answer:0,explanation:"Milestones are formal review points."},
+{lecture:"Lecture 10 – Risk, Teams, R&D (Exam Mix)",q:"New business development often starts with:",options:["Identifying opportunities and validating customer needs","Ignoring markets","Copying blindly","Avoiding value proposition"],answer:0,explanation:"Opportunity identification and validation are key."},
+{lecture:"Lecture 10 – Risk, Teams, R&D (Exam Mix)",q:"Risk acceptance means:",options:["Recognize risk and decide to live with it","Ignore risk completely","Transfer every risk always","Eliminate all risk instantly"],answer:0,explanation:"Acceptance = knowingly tolerate risk."},
+{lecture:"Lecture 10 – Risk, Teams, R&D (Exam Mix)",q:"A common source of project risk in high-tech is:",options:["Fast-changing technology and requirements","No uncertainty","Stable markets always","No stakeholders"],answer:0,explanation:"High-tech has changing tech/market/regulation."},
+{lecture:"Lecture 10 – Risk, Teams, R&D (Exam Mix)",q:"Quality improvement is usually supported by:",options:["Continuous monitoring and feedback","Avoiding measurement","Only blaming workers","Hiding defects"],answer:0,explanation:"Feedback and monitoring support improvement."},
+{lecture:"Lecture 10 – Risk, Teams, R&D (Exam Mix)",q:"Team leadership in technology work should provide:",options:["Vision, discipline, and motivation","Only punishment","No direction","Only paperwork"],answer:0,explanation:"Strong leaders keep innovation focused."},
+{lecture:"Lecture 10 – Risk, Teams, R&D (Exam Mix)",q:"A technology project life cycle typically requires:",options:["Consideration of all phases (concept→development→deployment→support)","Only design phase","Only marketing phase","Only finance phase"],answer:0,explanation:"Life-cycle thinking is emphasized in MoT."},
+
+/* ================== LECTURE 11: SOCIAL RESPONSIBILITY OF MoT/INNOVATION (15) ================== */
+{lecture:"Lecture 11 – Social Responsibility of MoT",q:"Social responsibility means:",options:["Obligations to society/stakeholders beyond legal requirements","Only maximizing short-term profit","Avoiding ethics","No reporting"],answer:0,explanation:"Social responsibility extends beyond profit and law."},
+{lecture:"Lecture 11 – Social Responsibility of MoT",q:"A stakeholder is:",options:["Any person/group affecting or affected by the organization","Only shareholders","Only customers","Only employees"],answer:0,explanation:"Stakeholders include many groups."},
+{lecture:"Lecture 11 – Social Responsibility of MoT",q:"Responsible innovation should aim to:",options:["Create value while minimizing harm and negative impacts","Maximize harm","Ignore environment","Avoid customers"],answer:0,explanation:"Balance value creation with social/environmental impacts."},
+{lecture:"Lecture 11 – Social Responsibility of MoT",q:"A socially responsible firm should:",options:["Assess social/environmental impacts of technology","Hide impacts","Ignore regulations","Avoid feedback"],answer:0,explanation:"Impact assessment and management are key."},
+{lecture:"Lecture 11 – Social Responsibility of MoT",q:"Sustainable competitive advantage is supported by:",options:["Continuous innovation aligned with strategy and responsible practice","Short-term imitation only","Avoiding technology","No change"],answer:0,explanation:"Sustained advantage often needs ongoing innovation and responsibility."},
+{lecture:"Lecture 11 – Social Responsibility of MoT",q:"Technology decisions should consider:",options:["Economic, social, and environmental outcomes","Only short-term profit","Only internal politics","Only office layout"],answer:0,explanation:"MoT links tech decisions to broader objectives."},
+{lecture:"Lecture 11 – Social Responsibility of MoT",q:"A key idea of corporate social responsibility is:",options:["Balancing stakeholder interests","Ignoring stakeholders","Serving only one stakeholder always","Avoiding transparency"],answer:0,explanation:"CSR balances interests of multiple stakeholders."},
+{lecture:"Lecture 11 – Social Responsibility of MoT",q:"An example of responsible technology management is:",options:["Reducing pollution through cleaner processes","Increasing defects","Hiding safety issues","Ignoring standards"],answer:0,explanation:"Environmental quality and safer processes support responsibility."},
+{lecture:"Lecture 11 – Social Responsibility of MoT",q:"Ethical decision-making supports responsibility by:",options:["Ensuring choices align with right/wrong principles","Maximizing deviance","Avoiding reporting systems","Ignoring laws"],answer:0,explanation:"Ethics underpins responsible behavior."},
+{lecture:"Lecture 11 – Social Responsibility of MoT",q:"A stakeholder approach encourages firms to:",options:["Consider impacts on employees, customers, community, etc.","Ignore community impacts","Only focus on internal costs","Avoid communication"],answer:0,explanation:"Stakeholder model broadens decision criteria."},
+{lecture:"Lecture 11 – Social Responsibility of MoT",q:"Responsible innovation commonly includes:",options:["Safety, fairness, transparency, and sustainability","Only speed and cost","Only secrecy","Only advertising"],answer:0,explanation:"Responsible innovation focuses on broader impacts."},
+{lecture:"Lecture 11 – Social Responsibility of MoT",q:"Technology used without considering ethics can:",options:["Create social harm even if tech is 'amoral'","Never harm society","Only improve quality always","Always be illegal"],answer:0,explanation:"Tech is amoral, but application can harm/benefit society."},
+{lecture:"Lecture 11 – Social Responsibility of MoT",q:"A firm aiming for long-term success should:",options:["Integrate social responsibility into technology strategy","Ignore sustainability","Avoid innovation","Avoid stakeholders"],answer:0,explanation:"Long-term success often needs responsible strategy."},
+{lecture:"Lecture 11 – Social Responsibility of MoT",q:"Which is MOST aligned with CSR?",options:["Transparent reporting and fair treatment","Hiding product risks","Avoiding compliance programs","Random punishment"],answer:0,explanation:"Transparency and fairness support CSR."},
+{lecture:"Lecture 11 – Social Responsibility of MoT",q:"A society benefits from technology when:",options:["Technology is applied to improve living standards and create wealth responsibly","Technology stays in labs only","Only imports are used","No innovation happens"],answer:0,explanation:"Application + responsible management improves society."},
+
+/* ================== FILLER TO REACH EXACTLY 200 (AUTO-GENERATED STYLE, BUT STILL EXAM-LIKE) ==================
+   Note: To keep this as one message (and readable), below we add 35 mixed exam-style items based on the same lecture themes.
+   Total questions here = 25+20+20+20+20+20+15+15+15+15+15 = 200 exactly? Let's count:
+   L1 25
+   L2 20  => 45
+   L3 20  => 65
+   L4 20  => 85
+   L5 20  => 105
+   L6 20  => 125
+   L7 15  => 140
+   L8 15  => 155
+   L9 15  => 170
+   L10 15 => 185
+   L11 15 => 200
+   ✅ EXACTLY 200 (no extra needed)
+*/
+];
+
+/* =========================
+   APP LOGIC
+   ========================= */
+let state = {
+  pool: [],
+  order: [],
+  idx: 0,
+  answers: {}, // key: poolPos -> {choice, correct, skipped, ts}
+  stats: {correct:0, wrong:0, skipped:0},
+  reviewWrongOnly: false,
+  exam: {on:false, totalQ:60, durationSec:7200, endAt:null, timerId:null}
+};
+
+function uniq(arr){ return Array.from(new Set(arr)); }
+function letter(i){ return ["A","B","C","D"][i] || "?"; }
+function escapeHtml(str){
+  return String(str).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+}
+
+function populateLectureFilter(){
+  const sel = document.getElementById('lectureFilter');
+  const lectures = uniq(ALL_QUESTIONS.map(q => q.lecture)).sort();
+  for (const l of lectures){
+    const opt = document.createElement('option');
+    opt.value = l; opt.textContent = l;
+    sel.appendChild(opt);
+  }
+}
+
+function buildPool(){
+  const filter = document.getElementById('lectureFilter').value;
+  let base = (filter === 'ALL') ? ALL_QUESTIONS.slice() : ALL_QUESTIONS.filter(q => q.lecture === filter);
+
+  // Exam mode: take only 60 questions
+  const examOn = (document.getElementById('examMode').value === 'on');
+  state.exam.on = examOn;
+
+  // If review wrong only: filter base to wrong ones (from previous run)
+  if (state.reviewWrongOnly){
+    base = base.filter((q, i) => {
+      // we need stable indexing, so use original ALL_QUESTIONS index:
+      const globalIndex = ALL_QUESTIONS.indexOf(q);
+      const a = state.answers["g"+globalIndex];
+      return a && a.correct === false;
+    });
+  }
+
+  // Save as pool with global ids
+  state.pool = base.map(q => ({...q, _gid: ALL_QUESTIONS.indexOf(q)}));
+
+  if (examOn){
+    // deterministic-ish: shuffle then slice 60
+    const tmp = state.pool.slice();
+    for (let i = tmp.length-1; i>0; i--){
+      const j = Math.floor(Math.random()*(i+1));
+      [tmp[i], tmp[j]] = [tmp[j], tmp[i]];
+    }
+    state.pool = tmp.slice(0, state.exam.totalQ);
+  }
+}
+
+function buildOrder(){
+  const mode = document.getElementById('mode').value;
+  state.order = state.pool.map((_, i) => i);
+  if (mode === 'random'){
+    for (let i = state.order.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [state.order[i], state.order[j]] = [state.order[j], state.order[i]];
+    }
+  }
+}
+
+function resetStats(){
+  state.idx = 0;
+  state.stats = {correct:0, wrong:0, skipped:0};
+  // do NOT clear global answers when switching modes/filters; we keep them for reviewWrong
+  // But we reset local pool-answers effect by clearing per-pool rendering only
+}
+
+function resetAll(){
+  stopTimer();
+  resetStats();
+  buildPool();
+  buildOrder();
+  startTimerIfNeeded();
+  render();
+}
+
+function currentQ(){
+  const pos = state.order[state.idx];
+  return state.pool[pos];
+}
+
+function setProgress(){
+  const total = state.order.length || 1;
+  const pct = (state.idx / total) * 100;
+  document.getElementById('bar').style.width = pct + "%";
+  document.getElementById('pillCount').innerHTML = `Question <strong>${Math.min(state.idx+1,total)}</strong> of <strong>${total}</strong>`;
+}
+
+function updateScore(){
+  const s = state.stats;
+  document.getElementById('correctCount').textContent = s.correct;
+  document.getElementById('wrongCount').textContent = s.wrong;
+  document.getElementById('skippedCount').textContent = s.skipped;
+}
+
+function clearExplain(){
+  const el = document.getElementById('explain');
+  el.classList.remove('show');
+}
+
+function showExplain(){
+  const q = currentQ();
+  if (!q) return;
+  const el = document.getElementById('explain');
+  const expl = q.explanation ? q.explanation : "No explanation provided.";
+  el.querySelector('.explanation-text').innerHTML = `<strong>Correct Answer:</strong> ${letter(q.answer)}. ${escapeHtml(q.options[q.answer])}<br/><br/>${escapeHtml(expl)}`;
+  el.classList.add('show');
+}
+
+function render(){
+  const q = currentQ();
+  if (!q){
+    document.getElementById('qtext').textContent = state.order.length === 0
+      ? "No questions in this filter (try All Lectures or turn off Wrong Only)."
+      : "🎉 Finished! Use Export Results to save your answers.";
+    document.getElementById('opts').innerHTML = "";
+    setProgress(); updateScore();
+    return;
+  }
+
+  document.getElementById('pillLecture').innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg><span>${q.lecture}</span>`;
+  document.getElementById('qtext').textContent = q.q;
+
+  setProgress();
+  updateScore();
+  clearExplain();
+
+  const opts = document.getElementById('opts');
+  opts.innerHTML = "";
+
+  // Use global answer key so reviewWrong works across filters
+  const key = "g"+q._gid;
+  const existing = state.answers[key];
+
+  q.options.forEach((t, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option';
+    btn.type = 'button';
+    btn.onclick = () => answer(i);
+    btn.innerHTML = `<div class="option-letter">${letter(i)}</div><div class="option-text">${escapeHtml(t)}</div>`;
+
+    if (existing){
+      if (i === q.answer) btn.classList.add('correct');
+      if (existing.choice === i && existing.choice !== q.answer) btn.classList.add('wrong');
+      btn.disabled = true;
+    }
+    opts.appendChild(btn);
+  });
+}
+
+function answer(choice){
+  const q = currentQ();
+  if (!q) return;
+  const key = "g"+q._gid;
+  if (state.answers[key]) return;
+
+  const correct = (choice === q.answer);
+  state.answers[key] = {choice, correct, ts:Date.now()};
+
+  if (correct) state.stats.correct += 1;
+  else state.stats.wrong += 1;
+
+  render();
+}
+
+function skip(){
+  const q = currentQ();
+  if (!q) return;
+  const key = "g"+q._gid;
+  if (!state.answers[key]){
+    state.answers[key] = {choice:null, correct:null, skipped:true, ts:Date.now()};
+    state.stats.skipped += 1;
+  }
+  next();
+}
+
+function next(){
+  if (state.idx < state.order.length - 1){
+    state.idx += 1;
+    render();
+  } else {
+    stopTimer();
+    document.getElementById('qtext').textContent = "Finished! 🎉 Use Export Results to save your score & answers.";
+    document.getElementById('opts').innerHTML = "";
+    setProgress(); updateScore();
+  }
+}
+
+function prev(){
+  if (state.idx > 0){
+    state.idx -= 1;
+    render();
+  }
+}
+
+function exportResults(){
+  const rows = state.pool.map(q => {
+    const key = "g"+q._gid;
+    const a = state.answers[key] || {};
+    const choice = (a.choice===0||a.choice===1||a.choice===2||a.choice===3) ? letter(a.choice) : "";
+    const correct = letter(q.answer);
+    const status = (a.correct===true) ? "CORRECT" : (a.correct===false ? "WRONG" : (a.skipped ? "SKIPPED" : ""));
+    return {lecture:q.lecture, question:q.q, choice, correct, status, explanation:q.explanation||""};
+  });
+
+  const payload = {
+    generatedAt: new Date().toISOString(),
+    examMode: state.exam.on ? {questions:state.exam.totalQ, durationSec:state.exam.durationSec} : null,
+    stats: state.stats,
+    filter: document.getElementById('lectureFilter').value,
+    mode: document.getElementById('mode').value,
+    results: rows
+  };
+
+  const blob = new Blob([JSON.stringify(payload,null,2)], {type:"application/json"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = "MoT_Quiz_Results.json";
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+/* =========================
+   EXAM TIMER (2 hours)
+   ========================= */
+function fmtTime(sec){
+  sec = Math.max(0, Math.floor(sec));
+  const h = String(Math.floor(sec/3600)).padStart(2,'0');
+  const m = String(Math.floor((sec%3600)/60)).padStart(2,'0');
+  const s = String(sec%60).padStart(2,'0');
+  return `${h}:${m}:${s}`;
+}
+
+function startTimerIfNeeded(){
+  const pill = document.getElementById('pillTimer');
+  if (!state.exam.on){
+    pill.style.display = "none";
+    return;
+  }
+  pill.style.display = "flex";
+  state.exam.endAt = Date.now() + state.exam.durationSec*1000;
+  tickTimer();
+  state.exam.timerId = setInterval(tickTimer, 250);
+}
+
+function tickTimer(){
+  const pill = document.getElementById('pillTimer');
+  const remaining = (state.exam.endAt - Date.now()) / 1000;
+  pill.querySelector('span').textContent = fmtTime(remaining);
+  if (remaining <= 0){
+    stopTimer();
+    alert("⏰ Time's up! Exam has ended.");
+    document.getElementById('qtext').textContent = "⏰ Time's up! Use Export Results to save your score.";
+    document.getElementById('opts').innerHTML = "";
+    setProgress(); updateScore();
+  }
+}
+
+function stopTimer(){
+  if (state.exam.timerId){
+    clearInterval(state.exam.timerId);
+    state.exam.timerId = null;
+  }
+}
+
+/* =========================
+   KEYBOARD SHORTCUTS
+   ========================= */
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  const key = e.key.toLowerCase();
+  if (key === 'a') answer(0);
+  else if (key === 'b') answer(1);
+  else if (key === 'c') answer(2);
+  else if (key === 'd') answer(3);
+  else if (key === 'n') next();
+  else if (key === 'p') prev();
+  else if (key === 'e') showExplain();
+});
+
+/* =========================
+   EVENT LISTENERS
+   ========================= */
+document.getElementById('restart').onclick = () => {
+  state.reviewWrongOnly = false;
+  // Clear all answers for a fresh restart
+  state.answers = {};
+  resetAll();
+};
+
+document.getElementById('reviewWrong').onclick = () => {
+  state.reviewWrongOnly = true;
+  resetAll();
+};
+
+document.getElementById('export').onclick = exportResults;
+document.getElementById('showExplain').onclick = showExplain;
+document.getElementById('skip').onclick = skip;
+document.getElementById('next').onclick = next;
+document.getElementById('prev').onclick = prev;
+
+document.getElementById('mode').onchange = resetAll;
+document.getElementById('lectureFilter').onchange = () => {
+  state.reviewWrongOnly = false;
+  resetAll();
+};
+document.getElementById('examMode').onchange = resetAll;
+
+/* =========================
+   START QUIZ (Hero to App)
+   ========================= */
+function startQuiz(){
+  document.getElementById('heroSection').style.display = 'none';
+  document.getElementById('appContainer').style.display = 'block';
+  resetAll();
+}
+
+/* =========================
+   INIT
+   ========================= */
+populateLectureFilter();
+
+// Attach start button event listener
+document.getElementById('startBtn').addEventListener('click', startQuiz);
+</script>
+</body>
+</html>
